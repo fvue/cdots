@@ -1,0 +1,29 @@
+#!/bin/sh
+
+	# Initialize script
+
+SCRIPT="`which \"$0\"`"
+SCRIPT_DIR="`dirname \"$SCRIPT\"`"
+cd $SCRIPT_DIR
+
+
+if [ "$1" = "--help" ]; then
+	echo "Usage: $0"
+	exit
+fi
+
+	# Initialize proj
+
+cd ../proj; 
+source init.sh; 
+cd $SCRIPT_DIR
+
+BAKFILE=${PROJ_NAME}.tgz
+
+	# Delete backup if existent
+if [ -f $BAKFILE ]; then
+	rm $BAKFILE;
+fi
+
+	# Create backup
+tar -C../.. -cvzhf $BAKFILE $PROJ_NAME/repos #$PROJ_NAME/email

@@ -1,0 +1,1 @@
+/home/freddy/proj/isreposd/1.0/isreposd.sh
