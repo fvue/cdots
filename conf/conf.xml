@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE project [
+	<!ENTITY proj "proj">
+	<!ENTITY version "current">
+]>
+<!-- @NOTE: This configuration file extends 'conf.out.xml' -->
+<project>
+	<namespace>http://www.fvue.nl/&proj;/&version;</namespace>
+</project>
