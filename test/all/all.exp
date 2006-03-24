@@ -1,0 +1,45 @@
+set test "2up"
+set prompt "bashdots> "
+	# cd to script dir
+cd [file dirname [info script]]
+
+	# Start bash
+
+exp_spawn bash --rcfile bashrc
+expect $prompt 
+send "source ../../bashdots.bash\n"
+expect $prompt 
+send "cd fixture1\n"
+expect $prompt 
+send ".. \t"
+expect {
+	-re "fixture1" { pass "" }
+	-re $prompt { fail "prompt" }
+	eof { fail "eof" }
+	timeout { fail "timeout" }
+}
+	# Finish '.. fixture1'
+send "1\n"
+expect $prompt
+	# Back to main directory
+send "cd ..\n"
+expect $prompt
+send "pwd\n"
+expect $prompt
+
+
+
+
+set test "3up"
+send "cd fixture1/1-1\n"
+expect $prompt
+send "... fixture1/1-\t"
+expect $prompt
+expect {
+	-re "fixture1/1-1/  fixture1/1-2/  fixture1/1-3/" { pass "" }
+	-re $prompt { fail "prompt" }
+	eof { fail "eof" }
+	timeout { fail "timeout" }
+}
+
+send "\nexit\n"

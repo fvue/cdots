@@ -1,0 +1,5 @@
+# Readline init file
+# See: info readline
+
+	# Press TAB once (instead of twice) to auto-complete
+set show-all-if-ambiguous on
