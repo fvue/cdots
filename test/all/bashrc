@@ -1,4 +1,4 @@
 	# Set prompt easy to detect by expect
-PS1='bashdots> '
+PS1='bashdots@\w> '
 	# Configure readline
 INPUTRC=`pwd`/inputrc
