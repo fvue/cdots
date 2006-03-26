@@ -13,6 +13,25 @@ expect -re $prompt
 
 
 
+set test "1upNonExisting"
+send "cd $scriptDir/fixture1/1-1\n"
+expect -re $prompt
+	# Try completion
+send ".. non_existing_dir\r"
+expect {
+		# .*\r\nfixture/1-1>
+        # --+--'`-----+------
+        #   |         +--> prompt; bash should've stayed in the same directory
+		#   +--> error message; e.g. "bash: cd: non_existing_dir: No such file or directory"
+	-re "bashdots@.*fixture1/1-1> "     { pass "$test" }
+	-re $prompt                { fail "$test at prompt (output: '$expect_out(buffer)'" }
+	eof                        { fail "$test at eof" }
+	timeout                    { fail "$test at timeout (output: $expect_out(buffer)" }
+}
+
+
+
+
 set test "1up"
 send "cd $scriptDir/fixture1/1-1\r"
 expect -re $prompt 
@@ -20,7 +39,7 @@ expect -re $prompt
 set cmd ".. 1-"; send "$cmd\t"
 expect {
 	-re "\r\n1-1/  1-2/  \r\n$prompt$cmd" { pass "$test" }
-	-re $prompt                { fail "$test at prompt" }
+	-re $prompt                { fail "$test at prompt (output: '$expect_out(buffer)'" }
 	eof                        { fail "$test at eof" }
 	timeout                    { fail "$test at timeout" }
 }
@@ -29,8 +48,8 @@ set test "1upped"
 	# Try to really cd
 send "1\n"
 expect {
-	-re "1-1> "        { pass "$test" }
-	-re $prompt      { fail "$test at prompt" }
+	-re "1-1> "      { pass "$test" }
+	-re $prompt      { fail "$test at prompt (output: '$expect_out(buffer)'" }
 	eof              { fail "$test at eof" }
 	timeout          { fail "$test at timeout" }
 }
