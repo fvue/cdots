@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 # --- dots.bash -----------------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
-# Version: 1.0
+# Version: 1.0.1
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree again,
-#                    with TAB-completion!
+#                    with TAB-completion.
 #
 # Example:   $/usr/share> .. local/share/   # .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
