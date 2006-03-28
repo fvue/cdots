@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 # --- dots.bash -----------------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
+# Version: 1.0
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree again,
