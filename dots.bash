@@ -20,7 +20,6 @@ _completeDots() {
 	COMPREPLY=( $(
 		cd ${dots//./..\/}.. > /dev/null
 		compgen -S '/' -d -- "${arg}"
-		cd - > /dev/null
 	) )
 } # _completeDots
 
