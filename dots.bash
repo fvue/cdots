@@ -15,14 +15,13 @@
 
     # TAB completion for the .. ... .... etc commands
 _completeDots() {
-    local argToComplete prevArg
-
-    COMPREPLY=()
-    argToComplete=${COMP_WORDS[COMP_CWORD]}
-    dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
-	cd ${dots//./..\/}..                # Replace . with ../, and cd
-	COMPREPLY=( $(compgen -S '/' -d -- "${argToComplete}") )
-	cd - > /dev/null                    # Restore current dir
+    local arg=${COMP_WORDS[COMP_CWORD]}
+    local dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
+	COMPREPLY=( $(
+		cd ${dots//./..\/}.. > /dev/null
+		compgen -S '/' -d -- "${arg}"
+		cd - > /dev/null
+	) )
 } # _completeDots
 
 
@@ -40,4 +39,4 @@ for ((i = 1; i <= 7; i++)); do
 	dotsFunctions="$dotsFunctions $dots"
 done
 	# Link functions .. ... .... etc with '_completeDots()'.
-complete -o nospace -F _completeDots $dotsFunctions
+complete -o nospace -d -F _completeDots $dotsFunctions

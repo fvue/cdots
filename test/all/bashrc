@@ -1,4 +1,8 @@
-	# Set prompt easy to detect by expect
-PS1='bashdots@\w>'
+	# Set prompt to ignore current working directory; display path starting from here
+	# E.g. prompt: bashdots//fixture1/1-1>
+mwd=$(pwd)
+PS1='bashdots$(cwd=$(pwd); echo ${cwd//$mwd//})>'
 	# Configure readline
 INPUTRC=`pwd`/inputrc
+	# Ensure enough columns so expect doesn't have to care about line breaks
+stty columns 150

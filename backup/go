@@ -12,6 +12,10 @@ if [ "$1" = "--help" ]; then
 	exit
 fi
 
+if ! ../proj/isreposd.sh; then
+	exit
+fi
+
 	# Initialize proj
 
 cd ../proj; 
