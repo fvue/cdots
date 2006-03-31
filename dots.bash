@@ -1,7 +1,7 @@
-#!/usr/bin/bash
+#!/bin/bash
 # --- dots.bash -----------------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
-# Version: 1.0.1
+# Version: 1.0.2
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree again,
@@ -10,16 +10,19 @@
 # Example:   $/usr/share> .. local/share/   # .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
 #
-# Install:   Add the code underneath to your ~/.bashrc
+# Install:   Store this file as ~/dots.bash.  Add to ~/.bashrc the line:
+#
+#               source ~/.dots.bash
+#
+# See also:  http://www.fvue.nl/bashdots/
 
 
     # TAB completion for the .. ... .... etc commands
 _completeDots() {
-    local arg=${COMP_WORDS[COMP_CWORD]}
     local dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
 	COMPREPLY=( $(
 		cd ${dots//./..\/}.. > /dev/null
-		compgen -S '/' -d -- "${arg}"
+		compgen -o nospace -S '/' -d -- "${COMP_WORDS[COMP_CWORD]}"
 	) )
 } # _completeDots
 
@@ -38,4 +41,4 @@ for ((i = 1; i <= 7; i++)); do
 	dotsFunctions="$dotsFunctions $dots"
 done
 	# Link functions .. ... .... etc with '_completeDots()'.
-complete -o nospace -d -F _completeDots $dotsFunctions
+complete -o nospace -F _completeDots $dotsFunctions
