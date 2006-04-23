@@ -1,7 +1,7 @@
 #!/bin/bash
-# --- dots.bash -----------------------------------------------------------
+# --- dots.sh -----------------------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
-# Version: 1.0.2
+# Version: 1.0.3
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree again,
@@ -10,12 +10,10 @@
 # Example:   $/usr/share> .. local/share/   # .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
 #
-# Install:   Store this file as ~/dots.bash.  Add to ~/.bashrc the line:
-#
-#               source ~/.dots.bash
-#
-# See also:  http://www.fvue.nl/bashdots/
+# See also:  http://www.fvue.nl/wiki/index.php/bashdots/
 
+
+DOTS_DEPTH=7
 
     # TAB completion for the .. ... .... etc commands
 _completeDots() {
@@ -29,16 +27,18 @@ _completeDots() {
 
 	# Define functions .. ... .... etc
 dotsFunctions=
-for ((i = 1; i <= 7; i++)); do
+for ((i = 1; i <= $DOTS_DEPTH; i++)); do
 	dots=.; dotsPath=
 	for ((j = 1; j <= $i; j++)); do
 		dots=$dots.; dotsPath=$dotsPath../
 	done	
-		# Make sure .. ... .... etc is unaliased
+		# Make sure aliases .. ... .... etc are unaliased
 	alias $dots &> /dev/null && unalias $dots
 		# Function definition
 	eval "$dots() { if [ $dotsPath\$1 ]; then cd $dotsPath\$1; fi }"
+	export -f $dots
 	dotsFunctions="$dotsFunctions $dots"
 done
 	# Link functions .. ... .... etc with '_completeDots()'.
 complete -o nospace -F _completeDots $dotsFunctions
+unset DOTS_DEPTH dots dotsFunctions dotsPath i j
