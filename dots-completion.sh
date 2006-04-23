@@ -12,6 +12,8 @@
 # See also:  http://www.fvue.nl/wiki/index.php/bashdots/
 
 
+DOTS_DEPTH=7
+
     # TAB completion for functions .. ... .... etc
 _completeDots() {
     local dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
@@ -23,7 +25,7 @@ _completeDots() {
 
     # Link '_completeDots()' to functions .. ... .... etc
 complete -o nospace -F _completeDots $(
-	for ((i = 1; i <= 7; i++)); do
+	for ((i = 1; i <= DOTS_DEPTH; i++)); do
 		dots=$dots.
 		echo $dots.
 	done
