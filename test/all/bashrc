@@ -6,5 +6,19 @@ PS1='bashdots@$(cwd=$(pwd); echo ${cwd//$mwd//})>'
 INPUTRC=`pwd`/inputrc
 	# Ensure enough columns so expect doesn't have to care about line breaks
 stty columns 150
-	# Load the test script
-source ../../dots.bash
+
+
+function clearDots() {
+	local dots dotsFunctions
+	for ((i = 1; i <= 7; i++)); do
+		dots=$dots.
+		dotsFunctions="$dotsFunctions $dots"
+	done
+		# Unset functions
+	unset -f $dotsFunctions
+		# Unset completion
+	complete -r $dotsFunctions
+} # clearDots()
+
+
+clearDots
