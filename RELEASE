@@ -1,0 +1,27 @@
+TODO:
+* create root directory 'bashdots-x.y.z' in deployed tar
+* install via rpm
+
+DONE:
+* Added VERSION file.
+
+
+
+BashDots-1.0.3, Apr 23, 2006
+
+* Export functions
+* Unset variables
+* Renamed script to <tt>dots.sh</tt>
+* Made alternative 2-file script: <tt>dots-functions.sh</tt> and <tt>dots-completion.sh</tt>
+
+
+BashDots-1.0.2
+
+* Removed <tt>-d</tt> argument from <tt>complete</tt> because it adds erroneous completions from the current directory.  This however brings back item 1 on the [[#Whish_list]].
+* Changed shebang to <tt>#!/bin/bash</tt>
+
+
+BashDots-1.0.1
+
+* Completion only shows last directory name instead of whole path
+* Added tests.

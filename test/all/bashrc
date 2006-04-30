@@ -3,21 +3,21 @@
 mwd=$(pwd)
 PS1='bashdots@$(cwd=$(pwd); echo ${cwd//$mwd//})>'
 	# Configure readline
-INPUTRC=`pwd`/inputrc
+INPUTRC=$(pwd)/inputrc
 	# Ensure enough columns so expect doesn't have to care about line breaks
 stty columns 150
 
 
 function clearDots() {
-	local dots dotsFunctions
-	for ((i = 1; i <= 7; i++)); do
-		dots=$dots.
-		dotsFunctions="$dotsFunctions $dots"
-	done
-		# Unset functions
-	unset -f $dotsFunctions
-		# Unset completion
-	complete -r $dotsFunctions
+    local dots dotsFunctions DOTS_DEPTH=7
+    for ((i = 1; i <= $DOTS_DEPTH; i++)); do
+        dots=$dots.
+        dotsFunctions="$dotsFunctions $dots"
+    done
+        # Unset functions
+    unset -f $dotsFunctions
+        # Unset completion
+    complete -r $dotsFunctions &> /dev/null
 } # clearDots()
 
 

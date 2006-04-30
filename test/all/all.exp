@@ -16,6 +16,7 @@ expect -re $prompt>
 send "source ../../dots.sh\n"
 	# Execute tests
 source lib/tests.exp
+send "\nexit\n"
 
 	# Test split file configuration
 
@@ -28,3 +29,4 @@ send "source ../../dots-functions.sh\n"
 send "source ../../dots-completion.sh\n"
 	# Execute tests
 source lib/tests.exp
+send "\nexit\n"

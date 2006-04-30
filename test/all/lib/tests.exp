@@ -180,7 +180,3 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 		timeout          { fail "$test at timeout" }
 	}; # expect
 }; # for
-
-
-
-send "\nexit\n"
