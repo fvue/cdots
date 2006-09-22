@@ -1,3 +1,5 @@
+    # Use bash strict mode
+set -o posix
 	# Set prompt to ignore current working directory; display path starting from here
 	# E.g. prompt: bashdots//fixture1/1-1>
 mwd=$(pwd)
@@ -9,10 +11,12 @@ stty columns 150
 
 
 function clearDots() {
-    local dots dotsFunctions DOTS_DEPTH=7
+    local dots=. dotsFunctions dotsAliases DOTS_DEPTH=7
     for ((i = 1; i <= $DOTS_DEPTH; i++)); do
+        dotsFunctions="$dotsFunctions dots$(($i + 1))"
         dots=$dots.
-        dotsFunctions="$dotsFunctions $dots"
+            # Unset alias
+        alias $dots > /dev/null 2>&1 && unalias $dots
     done
         # Unset functions
     unset -f $dotsFunctions
