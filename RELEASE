@@ -1,10 +1,17 @@
 TODO:
-* create root directory 'bashdots-x.y.z' in deployed tar
 * install via rpm
 
-DONE:
-* Added VERSION file.
 
+BashDots-1.0.5, Sep 23, 2006
+
+* Usage of aliases for single function 'dots' because of errors `not a valid identifier' in POSIX mode.
+* Added AUTHORS file.
+
+
+BashDots-1.0.4, Aug 6, 2006
+
+* Removed functions export because of sh errors (`..' not a valid identifier) 
+* Added VERSION file.
 
 
 BashDots-1.0.3, Apr 23, 2006
