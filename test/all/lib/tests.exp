@@ -185,7 +185,7 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 
 set dirs ""
 set dots .
-for {set i 1} {$i < 2} {incr i} {
+for {set i 1} {$i < $DEPTH} {incr i} {
 	set test "${i}up with completion of filled argument containing space"
 	set dir  "{$i 1}"
 	set dots $dots.
@@ -201,7 +201,9 @@ for {set i 1} {$i < 2} {incr i} {
 		# Try completion
 	set cmd "$dots '${pwd}'$i\\ "
 	send "$cmd\t"
-	set expected "^$cmd\r\n$i 1/  $i 2/  \r\n$prompt/fixture3/$cwd>"
+        # Escape backslashes for regexp (\ -> \B)
+    set cmd [string replace $cmd [string first "\\" $cmd] [string last "\\" $cmd] "\\B"]
+	set expected "$cmd\r\n$i 1/  $i 2/  \r\n$prompt/fixture3/$cwd>"
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }

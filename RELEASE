@@ -1,5 +1,6 @@
-TODO:
-* install via rpm
+BashDots-1.0.6, Sep 27, 2006
+
+* Fixed support for directories containing whitespace and special characters, e.g. &.
 
 
 BashDots-1.0.5, Sep 23, 2006

@@ -1,7 +1,7 @@
 #!/bin/bash
-# --- dots-completion.sh ----------------------------------------------------------------
+# --- dots-completion.sh ------------------------------------------------------
 # TAB completion for the .. ... .... etc commands, as defined in dots-functions.sh
-# Version: 1.0.5
+# Version: 1.0.6
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
@@ -12,20 +12,27 @@
 DOTS_DEPTH=7
 
 
-    # TAB completion for aliases .. ... .... etc
-_completeDots() {
+    # TAB completion for the .. ... .... etc commands
+_cdots() {
     local dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
-    COMPREPLY=( $(
+    local i IFS=$'\012' j k=0 cur=${COMP_WORDS[COMP_CWORD]}
+    for j in $( 
         cd ${dots//./..\/}.. > /dev/null
-        compgen -o nospace -S '/' -d -- "${COMP_WORDS[COMP_CWORD]}"
-    ) )
-} # _completeDots
+        compgen -d -- "${COMP_WORDS[COMP_CWORD]}"
+    ); do
+            # If j not directory in current working directory, append slash '/'
+            # NOTE: If j is also directory in current working directory, 
+            #       'complete -o filenames' automatically appends slash '/'
+        [ ! -d $j ] && j="$j/"
+        COMPREPLY[k++]="$j"
+    done
+} # _cdots()
 
-    # Link '_completeDots()' to aliases .. ... .... etc
-complete -o nospace -F _completeDots $(
+    # Link '_cdots()' to aliases .. ... .... etc
+complete -o filenames -o nospace -F _cdots $(
 	for ((i = 1; i <= DOTS_DEPTH; i++)); do
 		dots=$dots.
 		echo $dots.
 	done
 )
-unset -v dots i
+unset -v DOTS_DEPTH dots i
