@@ -1,6 +1,6 @@
 #!/bin/bash
-# --- dots-completion.sh ------------------------------------------------------
-# TAB completion for the .. ... .... etc commands, as defined in dots-functions.sh
+# --- cdots-completion.sh -----------------------------------------------------
+# TAB completion for the .. ... .... etc commands, as defined in cdots-functions.sh
 # Version: 1.0.7
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])

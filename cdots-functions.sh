@@ -1,5 +1,5 @@
 #!/bin/bash
-# ---- dots-functions.sh --------------------------------
+# ---- cdots-functions.sh ----------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
 # Version: 1.0.7
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]

@@ -13,20 +13,20 @@ exp_spawn bash --rcfile bashrc
 set prompt "bashdots@/"
 expect -re $prompt> 
 	# Load scripts
-send "source ../../dots.sh\n"
+send "source ../../cdots.sh\n"
 	# Execute tests
 source lib/tests.exp
 send "\nexit\n"
 
 	# Test split file configuration
 
-#	# Start bash
-#exp_spawn bash --rcfile bashrc
-#set prompt "bashdots@/"
-#expect -re $prompt> 
-#	# Load scripts
-#send "source ../../dots-functions.sh\n"
-#send "source ../../dots-completion.sh\n"
-#	# Execute tests
-#source lib/tests.exp
-#send "\nexit\n"
+	# Start bash
+exp_spawn bash --rcfile bashrc
+set prompt "bashdots@/"
+expect -re $prompt> 
+	# Load scripts
+send "source ../../cdots-functions.sh\n"
+send "source ../../cdots-completion.sh\n"
+	# Execute tests
+source lib/tests.exp
+send "\nexit\n"
