@@ -1,6 +1,12 @@
+BashDots-1.0.7, Sep 30, 2006
+
+* Fixed error message when completing non-existing dir.
+* Renamed scripts dots*.sh to cdots*.sh
+
+
 BashDots-1.0.6, Sep 27, 2006
 
-* Fixed support for directories containing whitespace and special characters, e.g. &.
+* Added support for directories containing special characters, e.g. whitespace or &.
 
 
 BashDots-1.0.5, Sep 23, 2006

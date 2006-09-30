@@ -1,7 +1,7 @@
 #!/bin/bash
 # --- dots-completion.sh ------------------------------------------------------
 # TAB completion for the .. ... .... etc commands, as defined in dots-functions.sh
-# Version: 1.0.6
+# Version: 1.0.7
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
@@ -14,17 +14,15 @@ DOTS_DEPTH=7
 
     # TAB completion for the .. ... .... etc commands
 _cdots() {
-    local dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
-    local i IFS=$'\012' j k=0 cur=${COMP_WORDS[COMP_CWORD]}
-    for j in $( 
-        cd ${dots//./..\/}.. > /dev/null
-        compgen -d -- "${COMP_WORDS[COMP_CWORD]}"
-    ); do
-            # If j not directory in current working directory, append slash '/'
+        # ':2' = Ignore two dots at pos 0, $'\012' = newline (\n)
+    local dots=${COMP_WORDS[COMP_CWORD-1]:2} IFS=$'\012' i j k=0
+    local dir=${dots//./..\/}../  # Replace . with ../
+    for j in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
+            # If j not directory in current working directory, append extra slash '/'
             # NOTE: If j is also directory in current working directory, 
             #       'complete -o filenames' automatically appends slash '/'
-        [ ! -d $j ] && j="$j/"
-        COMPREPLY[k++]="$j"
+        [ ! -d ${j#$dir} ] && j="$j/"
+        COMPREPLY[k++]="${j#$dir}"
     done
 } # _cdots()
 

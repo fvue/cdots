@@ -1,7 +1,7 @@
 #!/bin/bash
 # --- dots.sh -----------------------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
-# Version: 1.0.6
+# Version: 1.0.7
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree again,
@@ -18,17 +18,15 @@ DOTS_DEPTH=7
 
     # TAB completion for the .. ... .... etc commands
 _cdots() {
-    local dots=${COMP_WORDS[COMP_CWORD-1]:2}  # ':2' = Ignore two dots at pos 0
-    local i IFS=$'\012' j k=0 cur=${COMP_WORDS[COMP_CWORD]}
-    for j in $( 
-        cd ${dots//./..\/}.. > /dev/null
-        compgen -d -- "${COMP_WORDS[COMP_CWORD]}"
-    ); do
-            # If j not directory in current working directory, append slash '/'
+        # ':2' = Ignore two dots at pos 0, $'\012' = newline (\n)
+    local dots=${COMP_WORDS[COMP_CWORD-1]:2} IFS=$'\012' i j k=0
+    local dir=${dots//./..\/}../  # Replace . with ../
+    for j in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
+            # If j not directory in current working directory, append extra slash '/'
             # NOTE: If j is also directory in current working directory, 
             #       'complete -o filenames' automatically appends slash '/'
-        [ ! -d $j ] && j="$j/"
-        COMPREPLY[k++]="$j"
+        [ ! -d ${j#$dir} ] && j="$j/"
+        COMPREPLY[k++]="${j#$dir}"
     done
 } # _cdots()
 
@@ -54,6 +52,6 @@ for ((i = 1; i <= $DOTS_DEPTH; i++)); do
 	dotsAliases="$dotsAliases $dots"
 done
 	# Link aliases .. ... .... etc with '_cdots()'.
-    # Options: -o filenames: Escapes whitespace
+    # -o filenames: Escapes whitespace
 complete -o filenames -o nospace -F _cdots $dotsAliases
 unset -v DOTS_DEPTH dots dotsAliases i j
