@@ -1,0 +1,32 @@
+You can install either a single file cdots.sh (1) or two separate files
+cdots-functions.sh and cdots-completion.sh (2).
+
+There are many places to put them. These are a few:
+
+1. As a single file for a single user
+
+   Include cdots.sh from within ~/.bashrc:
+
+       source cdots.sh
+
+2. As separate files for all users
+
+   Copy cdots-functions.sh to /etc/profile.d. Make sure /etc/profile contains
+   something like this: 
+   
+      if test -d /etc/profile.d; then
+         for s in /etc/profile.d/*.sh ; do
+            test -r $s && . $s
+         done
+         unset s
+      fi
+   
+   Copy cdots-completion.sh to /etc/bash_completion.d. Make sure /etc/profile
+   contains something like this: 
+   
+      if test -d /etc/bash_completion.d; then
+         for s in /etc/bash_completion.d/*.sh ; do
+            test -r $s && . $s
+         done
+         unset s
+      fi

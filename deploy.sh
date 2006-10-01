@@ -11,7 +11,7 @@ tar -cvzf $pversion.tar.gz \
 	--exclude=test/.svn \
 	--exclude=test/all/.svn \
 	--exclude='*.swp' \
-	${pversion}/cdots.sh ${pversion}/cdots-completion.sh ${pversion}/cdots-functions.sh ${pversion}/AUTHORS ${pversion}/VERSION ${pversion}/RELEASE ${pversion}/test
+	${pversion}/cdots.sh ${pversion}/cdots-completion.sh ${pversion}/cdots-functions.sh ${pversion}/AUTHORS ${pversion}/COPYING ${pversion}/INSTALL ${pversion}/VERSION ${pversion}/RELEASE ${pversion}/test
 
     # Remove temporary directory
 [ -h $pversion ] && rm $pversion
