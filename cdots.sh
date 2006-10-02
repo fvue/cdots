@@ -1,7 +1,7 @@
 #!/bin/bash
 # --- cdots.sh ----------------------------------------------------------------
 # Change directory back - up the directory tree - 1-7 times.
-# Version: 1.0.7
+# Version: 1.0.8
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree again,
@@ -29,7 +29,7 @@
 #     http://www.fvue.nl/cdots/
 
 
-DOTS_DEPTH=7
+CDOTS_DEPTH=7
 
 
     # TAB completion for the .. ... .... etc commands
@@ -47,27 +47,28 @@ _cdots() {
 } # _cdots()
 
 
-# Change directory to specified directory at [level] directories back
-# @param $1 integer  Level
-# @param $2 string   Directory
+# Change directory to specified directories back and forth
+# @param $1 string   Directory back
+# @param $2 string   Directory forth
+# @see _cdots()
 function cdots() {
-    local i dir
-    for ((i = 0; i < $1; i++)); do dir="../$dir"; done
-    cd "$dir$2"
+    cd "$1$2"
 } # cdots()
 
 
 	# Define aliases .. ... .... etc
     # NOTE: Functions are not defined directly as .. ... .... etc, because
     #       these are not valid identifiers when `POSIX mode' is in effect
-dotsAliases=
-for ((i = 1; i <= $DOTS_DEPTH; i++)); do
-	dots=.
-	for ((j = 1; j <= $i; j++)); do dots=$dots.; done
-	alias $dots="cdots $i"
-	dotsAliases="$dotsAliases $dots"
+cdotsAliases=
+cdotsAlias=.
+cdotsDir=
+for ((i = 1; i <= $CDOTS_DEPTH; i++)); do
+	cdotsAlias=$cdotsAlias.
+    cdotsDir=$cdotsDir../
+	alias $cdotsAlias="cdots $cdotsDir"
+	cdotsAliases="$cdotsAliases $cdotsAlias"
 done
 	# Link aliases .. ... .... etc with '_cdots()'.
     # -o filenames: Escapes whitespace
-complete -o filenames -o nospace -F _cdots $dotsAliases
-unset -v DOTS_DEPTH dots dotsAliases i j
+complete -o filenames -o nospace -F _cdots $cdotsAliases
+unset -v CDOTS_DEPTH cdotsAlias cdotsAliases cdotsDir i j

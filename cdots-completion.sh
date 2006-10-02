@@ -1,7 +1,7 @@
 #!/bin/bash
 # --- cdots-completion.sh -----------------------------------------------------
 # TAB completion for the .. ... .... etc commands, as defined in cdots-functions.sh
-# Version: 1.0.7
+# Version: 1.0.8
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
@@ -25,7 +25,7 @@
 #     http://www.fvue.nl/cdots/
 
 
-DOTS_DEPTH=7
+CDOTS_DEPTH=7
 
 
     # TAB completion for the .. ... .... etc commands
@@ -44,9 +44,9 @@ _cdots() {
 
     # Link '_cdots()' to aliases .. ... .... etc
 complete -o filenames -o nospace -F _cdots $(
-	for ((i = 1; i <= DOTS_DEPTH; i++)); do
-		dots=$dots.
-		echo $dots.
+	for ((i = 1; i <= CDOTS_DEPTH; i++)); do
+		cdotsAlias=$cdotsAlias.
+		echo $cdotsAlias.
 	done
 )
-unset -v DOTS_DEPTH dots i
+unset -v CDOTS_DEPTH cdotsAlias i
