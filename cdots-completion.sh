@@ -1,6 +1,7 @@
 #!/bin/bash
-# --- cdots-completion.sh -----------------------------------------------------
-# TAB completion for the .. ... .... etc commands, as defined in cdots-functions.sh
+# --- cdots-completion.sh --------------------------------------------
+# TAB completion for the .. ... .... etc commands: cdots-functions.sh
+# Copyright (C) 2006  Freddy Vulto
 # Version: 1.0.8
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
@@ -17,36 +18,40 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software Foundation,
-# Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+# along with this program; if not, write to the Free Software 
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, 
+# MA  02110-1301, USA
 #
 # The latest version of this software can be obtained here:
-#
-#     http://www.fvue.nl/cdots/
+# http://www.fvue.nl/cdots/
 
 
 CDOTS_DEPTH=7
 
 
-    # TAB completion for the .. ... .... etc commands
+#--- _cdots() --------------------------------------------------------
+# TAB completion for the .. ... .... etc commands
+# @see cdots()
 _cdots() {
         # ':2' = Ignore two dots at pos 0, $'\012' = newline (\n)
     local dots=${COMP_WORDS[COMP_CWORD-1]:2} IFS=$'\012' i j k=0
     local dir=${dots//./..\/}../  # Replace . with ../
     for j in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
-            # If j not directory in current working directory, append extra slash '/'
-            # NOTE: If j is also directory in current working directory, 
-            #       'complete -o filenames' automatically appends slash '/'
+            #  If j not dir in current dir, append extra slash '/'
+            #  NOTE: If j is also dir in current dir, 'complete -o 
+            #+       filenames' automatically appends slash '/'
         [ ! -d ${j#$dir} ] && j="$j/"
         COMPREPLY[k++]="${j#$dir}"
     done
 } # _cdots()
 
-    # Link '_cdots()' to aliases .. ... .... etc
+
+    # Set completion of aliases .. ... .... etc to _cdots()
+    # -o filenames: Escapes whitespace
 complete -o filenames -o nospace -F _cdots $(
-	for ((i = 1; i <= CDOTS_DEPTH; i++)); do
-		cdotsAlias=$cdotsAlias.
-		echo $cdotsAlias.
-	done
+    for ((i = 1; i <= CDOTS_DEPTH; i++)); do
+        cdotsAlias=$cdotsAlias.
+        echo $cdotsAlias.
+    done
 )
 unset -v CDOTS_DEPTH cdotsAlias i
