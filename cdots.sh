@@ -41,9 +41,10 @@ function _cdots() {
     local dir=${dots//./..\/}../  # Replace . with ../
     for j in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
             #  If j not dir in current dir, append extra slash '/'
-            #  NOTE: If j is also dir in current dir, 'complete -o 
-            #+       filenames' automatically appends slash '/'
-        [ ! -d ${j#$dir} ] && j="$j/"
+            #  NOTE: With bash > v2, if j is also dir in current dir, 
+            #+       'complete -o filenames' automatically appends 
+            #+       slash '/'
+        (( $BASH_VERSINFO == 2 )) || [ ! -d ${j#$dir} ] && j="$j/"
         COMPREPLY[k++]="${j#$dir}"
     done
 } # _cdots()
