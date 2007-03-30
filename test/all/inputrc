@@ -3,3 +3,5 @@
 
 	# Press TAB once (instead of twice) to auto-complete
 set show-all-if-ambiguous on
+    # No bell.  No ^G in output
+set bell-style none
