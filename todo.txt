@@ -1,1 +1,3 @@
+Bugfix: completion doesn't work when current directory is symlink.  This is probably because 'compgen -d' can't handle the symlink.
+
 install via rpm

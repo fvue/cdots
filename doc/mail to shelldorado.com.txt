@@ -1,3 +1,21 @@
+You can save keystrokes by using shortcuts for changing directories back AND supplying an additional argument: the directory to go forth from there.
+
+It is like making a U-turn:
+
+.. [dir] = cd ../[dir]
+... [dir] = cd ../../[dir]
+.... [dir] = cd ../../../[dir]
+..... [dir] = cd ../../../../[dir]
+...... [dir] = cd ../../../../../[dir]
+....... [dir] = cd ../../../../../../[dir]
+........ [dir] = cd ../../../../../../../[dir]
+
+The directory-argument can be TAB-completed!
+
+Include the script underneath in your ~/.bashrc with the command: source cdots.sh
+
+---8<-------------------------
+
 #!/bin/bash
 # --- cdots.sh -------------------------------------------------------
 # Change directory back - 1-7 times - and forth with TAB-completion.
@@ -35,7 +53,7 @@ CDOTS_DEPTH=7
 #--- _cdots() --------------------------------------------------------
 # TAB completion for the .. ... .... etc commands
 # @see cdots()
-function _cdots() {
+_cdots() {
         # ':2' = Ignore two dots at pos 0, $'\012' = newline (\n)
     local dots=${COMP_WORDS[COMP_CWORD-1]:2} IFS=$'\012' i j k=0
     local dir=${dots//./..\/}../  # Replace . with ../
@@ -72,3 +90,4 @@ done
     # -o filenames: Escapes whitespace
 complete -o filenames -o nospace -F _cdots $cdotsAliases
 unset -v CDOTS_DEPTH cdotsAlias cdotsAliases cdotsDir i
+
