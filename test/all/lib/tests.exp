@@ -266,7 +266,8 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 		# Try to really cd
 	send "$i-1\n"
 	#set expected "$cmd$i-1\r\nbash: cd: $prevdirs../$i-1: Not a directory\r\n$prompt/fixture1/$cwd>"
-	set expected ".. $i-1\r\nbash: cd: $prevdirs../$i-1: Not a directory\r\n$prompt/fixture1/$cwd>"
+    # Error message can be `Not a directory' or `No such file or directory'
+	set expected ".. $i-1\r\nbash: cd: $prevdirs../$i-1: No\[a-z \]+directory\r\n$prompt/fixture1/$cwd>"
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
