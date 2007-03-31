@@ -1,118 +1,299 @@
 set DEPTH 8
 
 
+#set dirs ""
+#set dots .
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up with argument - non-existing-dir"
+#	set dir "$i-1"
+#	set dots $dots.
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd $scriptDir/fixture1/$cwd\r"
+#	expect -re $prompt/fixture1/$cwd>
+#		# Send command
+#	set cmd "$dots non_existing_dir"
+#	send "$cmd\r"
+#		# Bash should've stayed in the same directory
+#	set expected "^$cmd\r\nbash: cd: .*$prompt/fixture1/$cwd>$"
+#	expect {
+#		-re $expected { pass $test }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout" }
+#	}; # expect
+#}; # for
+#
+#
+#
+#set dirs ""
+#set dots .
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up without argument"
+#	set dir "$i-1"
+#	set dots $dots.
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd $scriptDir/fixture1/$cwd\r"
+#	expect -re $prompt/fixture1/$cwd>
+#		# Send command
+#	set cmd "$dots"
+#	send "$cmd\r"
+#	set expected "^$cmd\r\n$prompt/fixture1>$"
+#	expect {
+#		-re $expected { pass $test }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout" }
+#	}; # expect
+#}; # for
+#
+#
+#set dirs ""
+#set dots .
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up with completion of filled argument"
+#	set dir  "$i-1"
+#	set dots $dots.
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd $scriptDir/fixture1/$cwd\r"
+#	expect -re $prompt/fixture1/$cwd>
+#		# Try completion
+#	set cmd "$dots ${pwd}$i-"
+#	send "$cmd\t"
+#	set expected "^$cmd\r\n$i-1/ +$i-2/ +\r\n$prompt/fixture1/$cwd>$cmd$"
+#	expect {
+#		-re $expected  { pass "$test" }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout" }
+#	}; # expect
+#
+#
+#	set test "${i}upped with argument-completion"
+#		# Try to really cd
+#	send "1\n"
+#	set expected $prompt/fixture1/$cwd>
+#	expect {
+#		-re $expected    { pass "$test" }
+#		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof              { fail "$test at eof" }
+#		timeout          { fail "$test at timeout" }
+#	}; # expect
+#}; # for
+#
+#
+#
+#set dirs ""
+#set dots .
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up with completion of empty argument"
+#	set dir  "$i-1"
+#	set dots $dots.
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd $scriptDir/fixture1/$cwd\r"
+#	expect -re $prompt/fixture1/$cwd>
+#		# Try completion
+#	set cmd "$dots "
+#	send "$cmd\t"
+#	set expected "^$cmd\r\n1-1/ +1-2/ +.svn/ *\r\n$prompt/fixture1/$cwd>$cmd$"
+#	expect {
+#		-re $expected  { pass "$test" }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout" }
+#	}; # expect
+#
+#
+#	set test "${i}upped with argument-completion"
+#		# Try to really cd
+#	send "1\n"
+#	set expected $prompt/fixture1/$cwd>
+#	expect {
+#		-re $expected    { pass "$test" }
+#		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof              { fail "$test at eof" }
+#		timeout          { fail "$test at timeout ($expect_out(buffer))" }
+#	}; # expect
+#}; # for
+#
+#
+#
+#set dirs ""
+#set dots .
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up with completion of path argument"
+#	set dir  "$i-1"
+#	set dots $dots.
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd $scriptDir/fixture1/$cwd\r"
+#	expect -re $prompt/fixture1/$cwd>
+#		# Try completion
+#	set cmd "$dots $pwd"
+#	send "$cmd\t"
+#	set expected "^$cmd\r\n$i-1/ +$i-2/ +\.svn/ *\r\n$prompt/fixture1/$cwd>$cmd$"
+#	expect {
+#		-re $expected  { pass "$test" }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout ($expect_out(buffer))" }
+#	}; # expect
+#
+#
+#	set test "${i}upped with argument-completion"
+#		# Try to really cd
+#	send "$i-1\n"
+#	#set expected $prompt/fixture1/$cwd/$i-1>
+#	set expected .*>
+#	expect {
+#		-re $expected    { pass "$test" }
+#		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof              { fail "$test at eof" }
+#		timeout          { fail "$test at timeout" }
+#	}; # expect
+#}; # for
+#
+#
+#
+#set dirs ""
+#set dots .
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up with completion of filled argument containing space"
+#	set dir  "{$i 1}"
+#	set dots $dots.
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd '$scriptDir/fixture3/$cwd'\r"
+#	expect -re $prompt/fixture3/$cwd>
+#		# Try completion
+#	set cmd "$dots '${pwd}'$i"
+#	send "$cmd\t"
+#        # Escape backslashes for regexp (\ -> \B)
+#    #set cmd [string replace $cmd [string first "\\" $cmd] [string last "\\" $cmd] "\\B"]
+#	set expected "$cmd\r\n$i 1/  $i 2/  \r\n$prompt/fixture3/$cwd>"
+#	expect {
+#		-re $expected  { pass "$test" }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout" }
+#	}; # expect
+#
+#
+#	set test "${i}upped with argument-completion"
+#		# Try to really cd
+#	send "1\n"
+#	set expected $prompt/fixture3/$cwd>
+#	expect {
+#		-re $expected    { pass "$test" }
+#		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof              { fail "$test at eof" }
+#		timeout          { fail "$test at timeout" }
+#	}; # expect
+#}; # for
+#
+#
+#
+#set dirs ""
+#set dots .
+#set prevdirs ""
+#for {set i 1} {$i < $DEPTH} {incr i} {
+#	set test "${i}up to non-existing dir with completion"
+#	set dir  "$i-1"
+#	set dots $dots.
+#    if {$i > 1} {set prevdirs ../$prevdirs}
+#  		# Previous working directory
+#	set pwd [join $dirs "/"];
+# 	if [llength $dirs] {
+#		set pwd $pwd/
+#	}; # if
+#	set dirs [concat $dirs $dir]
+#	set cwd  [join $dirs "/"]
+#	send "cd $scriptDir/fixture1/$cwd\r"
+#	expect -re $prompt/fixture1/$cwd>
+#        # Change permissions(Re)move dir
+#        # NOTE: I actually wanted to (re)move dir, but `mv dir' doesn't work because 
+#        #       with ext3 filesystem, the bash shell automatically follows the moved dir:
+#        #          exec mv $scriptDir/fixture1 $scriptDir/fixture1_
+#        #       Workaround is to change permissions.
+#        #       -- FVu,  Fri Mar 30 22:36:38 CEST 2007
+#    exec chmod ug-x $scriptDir/fixture1
+#		# Try completion
+#	set cmd "$dots "
+#	send "$cmd\t"
+#	set expected ""
+#	expect {
+#		-re $expected  { pass "$test" }
+#		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof       { fail "$test at eof" }
+#		timeout   { fail "$test at timeout" }
+#	}; # expect
+#
+#
+#	set test "${i}upped to non-existing dir with completion"
+#		# Try to really cd
+#	send "$i-1\n"
+#	#set expected "$cmd$i-1\r\nbash: cd: $prevdirs../$i-1: Not a directory\r\n$prompt/fixture1/$cwd>"
+#    # Error message can be `Not a directory' or `No such file or directory'
+#	set expected ".. $i-1\r\nbash: cd: $prevdirs../$i-1: No\[a-z \]+directory\r\n$prompt/fixture1/$cwd>"
+#	expect {
+#		-re $expected    { pass "$test" }
+#		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+#		eof              { fail "$test at eof" }
+#		timeout          { fail "$test at timeout ($expect_out(buffer))" }
+#	}; # expect
+#        # Restore permissions
+#    exec chmod ug+x $scriptDir/fixture1
+#    #exec mv $scriptDir/fixture1_ $scriptDir/fixture1
+#}; # for
+
+
+
+
 set dirs ""
 set dots .
 for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with argument - non-existing-dir"
-	set dir "$i-1"
+	set test "${i}up within symlink with completion of empty argument"
+	set dir     "$i-1"
 	set dots $dots.
   		# Previous working directory
 	set pwd [join $dirs "/"];
  	if [llength $dirs] {
 		set pwd $pwd/
 	}; # if
-	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
-	send "cd $scriptDir/fixture1/$cwd\r"
-	expect -re $prompt/fixture1/$cwd>
-		# Send command
-	set cmd "$dots non_existing_dir"
-	send "$cmd\r"
-		# Bash should've stayed in the same directory
-	set expected "^$cmd\r\nbash: cd: .*$prompt/fixture1/$cwd>$"
-	expect {
-		-re $expected { pass $test }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
-	}; # expect
-}; # for
-
-
-
-set dirs ""
-set dots .
-for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up without argument"
-	set dir "$i-1"
-	set dots $dots.
-  		# Previous working directory
-	set pwd [join $dirs "/"];
- 	if [llength $dirs] {
-		set pwd $pwd/
-	}; # if
-	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
-	send "cd $scriptDir/fixture1/$cwd\r"
-	expect -re $prompt/fixture1/$cwd>
-		# Send command
-	set cmd "$dots"
-	send "$cmd\r"
-	set expected "^$cmd\r\n$prompt/fixture1>$"
-	expect {
-		-re $expected { pass $test }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
-	}; # expect
-}; # for
-
-
-set dirs ""
-set dots .
-for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with completion of filled argument"
-	set dir  "$i-1"
-	set dots $dots.
-  		# Previous working directory
-	set pwd [join $dirs "/"];
- 	if [llength $dirs] {
-		set pwd $pwd/
-	}; # if
-	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
-	send "cd $scriptDir/fixture1/$cwd\r"
-	expect -re $prompt/fixture1/$cwd>
-		# Try completion
-	set cmd "$dots ${pwd}$i-"
-	send "$cmd\t"
-	set expected "^$cmd\r\n$i-1/ +$i-2/ +\r\n$prompt/fixture1/$cwd>$cmd$"
-	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
-	}; # expect
-
-
-	set test "${i}upped with argument-completion"
-		# Try to really cd
-	send "1\n"
-	set expected $prompt/fixture1/$cwd>
-	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
-	}; # expect
-}; # for
-
-
-
-set dirs ""
-set dots .
-for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with completion of empty argument"
-	set dir  "$i-1"
-	set dots $dots.
-  		# Previous working directory
-	set pwd [join $dirs "/"];
- 	if [llength $dirs] {
-		set pwd $pwd/
-	}; # if
-	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
+	set cwd  [join [concat $dirs "$i-2"] "/"]
 	send "cd $scriptDir/fixture1/$cwd\r"
 	expect -re $prompt/fixture1/$cwd>
 		# Try completion
@@ -127,7 +308,7 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	}; # expect
 
 
-	set test "${i}upped with argument-completion"
+	set test "${i}upped within symlink with argument-completion"
 		# Try to really cd
 	send "1\n"
 	set expected $prompt/fixture1/$cwd>
@@ -137,144 +318,9 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 		eof              { fail "$test at eof" }
 		timeout          { fail "$test at timeout ($expect_out(buffer))" }
 	}; # expect
-}; # for
 
-
-
-set dirs ""
-set dots .
-for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with completion of path argument"
-	set dir  "$i-1"
-	set dots $dots.
-  		# Previous working directory
-	set pwd [join $dirs "/"];
- 	if [llength $dirs] {
-		set pwd $pwd/
-	}; # if
 	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
-	send "cd $scriptDir/fixture1/$cwd\r"
-	expect -re $prompt/fixture1/$cwd>
-		# Try completion
-	set cmd "$dots $pwd"
-	send "$cmd\t"
-	set expected "^$cmd\r\n$i-1/ +$i-2/ +\.svn/ *\r\n$prompt/fixture1/$cwd>$cmd$"
-	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout ($expect_out(buffer))" }
-	}; # expect
-
-
-	set test "${i}upped with argument-completion"
-		# Try to really cd
-	send "$i-1\n"
-	#set expected $prompt/fixture1/$cwd/$i-1>
-	set expected .*>
-	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
-	}; # expect
 }; # for
 
 
 
-set dirs ""
-set dots .
-for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with completion of filled argument containing space"
-	set dir  "{$i 1}"
-	set dots $dots.
-  		# Previous working directory
-	set pwd [join $dirs "/"];
- 	if [llength $dirs] {
-		set pwd $pwd/
-	}; # if
-	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
-	send "cd '$scriptDir/fixture3/$cwd'\r"
-	expect -re $prompt/fixture3/$cwd>
-		# Try completion
-	set cmd "$dots '${pwd}'$i"
-	send "$cmd\t"
-        # Escape backslashes for regexp (\ -> \B)
-    #set cmd [string replace $cmd [string first "\\" $cmd] [string last "\\" $cmd] "\\B"]
-	set expected "$cmd\r\n$i 1/  $i 2/  \r\n$prompt/fixture3/$cwd>"
-	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
-	}; # expect
-
-
-	set test "${i}upped with argument-completion"
-		# Try to really cd
-	send "1\n"
-	set expected $prompt/fixture3/$cwd>
-	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
-	}; # expect
-}; # for
-
-
-
-set dirs ""
-set dots .
-set prevdirs ""
-for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up to non-existing dir with completion"
-	set dir  "$i-1"
-	set dots $dots.
-    if {$i > 1} {set prevdirs ../$prevdirs}
-  		# Previous working directory
-	set pwd [join $dirs "/"];
- 	if [llength $dirs] {
-		set pwd $pwd/
-	}; # if
-	set dirs [concat $dirs $dir]
-	set cwd  [join $dirs "/"]
-	send "cd $scriptDir/fixture1/$cwd\r"
-	expect -re $prompt/fixture1/$cwd>
-        # Change permissions(Re)move dir
-        # NOTE: I actually wanted to (re)move dir, but `mv dir' doesn't work because 
-        #       with ext3 filesystem, the bash shell automatically follows the moved dir:
-        #          exec mv $scriptDir/fixture1 $scriptDir/fixture1_
-        #       Workaround is to change permissions.
-        #       -- FVu,  Fri Mar 30 22:36:38 CEST 2007
-    exec chmod ug-x $scriptDir/fixture1
-		# Try completion
-	set cmd "$dots "
-	send "$cmd\t"
-	set expected ""
-	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
-	}; # expect
-
-
-	set test "${i}upped to non-existing dir with completion"
-		# Try to really cd
-	send "$i-1\n"
-	#set expected "$cmd$i-1\r\nbash: cd: $prevdirs../$i-1: Not a directory\r\n$prompt/fixture1/$cwd>"
-    # Error message can be `Not a directory' or `No such file or directory'
-	set expected ".. $i-1\r\nbash: cd: $prevdirs../$i-1: No\[a-z \]+directory\r\n$prompt/fixture1/$cwd>"
-	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout ($expect_out(buffer))" }
-	}; # expect
-        # Restore permissions
-    exec chmod ug+x $scriptDir/fixture1
-    #exec mv $scriptDir/fixture1_ $scriptDir/fixture1
-}; # for
