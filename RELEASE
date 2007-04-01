@@ -1,4 +1,4 @@
-$VERSION
+cdots-1.0.9, Apr 1, 2007
 
 - Improved completion if current directory is symbolic link:  Absolute instead
   of relative paths are now passed to `compgen' since compgen appears to

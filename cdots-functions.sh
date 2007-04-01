@@ -2,8 +2,8 @@
 # --- cdots.sh -------------------------------------------------------
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # For TAB-completion see: dots-completion.sh
-# Copyright (C) 2006  Freddy Vulto
-# Version: 1.0.8
+# Copyright (C) 2007  Freddy Vulto
+# Version: 1.0.9
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree
