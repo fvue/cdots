@@ -1,3 +1,12 @@
+$VERSION
+
+- Improved completion if current directory is symbolic link:  Absolute instead
+  of relative paths are now passed to `compgen' since compgen appears to
+  dereference the current directory before changing to a relative directory.
+- Fixed completion to append slashes under bash-2.05b.
+- Fixed testsuite to run under Debian 3.1 and Ubuntu 6.10.
+
+
 cdots-1.0.8, Oct 2, 2006
 
 * Shortened scripts

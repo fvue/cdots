@@ -2,7 +2,7 @@
 # --- cdots.sh -------------------------------------------------------
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # Copyright (C) 2006  Freddy Vulto
-# Version: 1.0.8
+# Version: 1.0.9
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree
@@ -36,9 +36,11 @@ CDOTS_DEPTH=7
 # TAB completion for the .. ... .... etc commands
 # @see cdots()
 function _cdots() {
-        # ':2' = Ignore two dots at pos 0, $'\012' = newline (\n)
-    local dots=${COMP_WORDS[COMP_CWORD-1]:2} IFS=$'\012' i j k=0
-    local dir=${dots//./..\/}../  # Replace . with ../
+        # ':1' = Ignore dot at pos 0, $'\012' = newline (\n)
+    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\012' i j k=0
+        #      +-----------2---------+ : Remove trailing /*s from PWD
+        #      |     +-------1------+| : Replace every . with /*
+    local dir="${PWD%${dots//\./\/\*}}/"
     for j in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
             #  If j not dir in current dir, append extra slash '/'
             #  NOTE: With bash > v2, if j is also dir in current dir, 
