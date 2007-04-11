@@ -3,7 +3,7 @@
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # For TAB-completion see: dots-completion.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.0.9
+# Version: 1.0.10
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree
@@ -39,7 +39,7 @@ CDOTS_DEPTH=7
 # @param $2 string   Directory forth
 # @see _cdots() for TAB-completion
 function cdots() {
-    cd "$1$2"
+    eval cd "$1$2"
 } # cdots()
 
 

@@ -1,3 +1,8 @@
+cdots-1.0.10, Apr 11, 2007
+
+- Fixed handling of globbing character(s) in argument.
+
+
 cdots-1.0.9, Apr 1, 2007
 
 - Improved completion if current directory is symbolic link:  Absolute instead

@@ -1,8 +1,8 @@
 #!/bin/bash
 # --- cdots-completion.sh --------------------------------------------
 # TAB completion for the .. ... .... etc commands: cdots-functions.sh
-# Copyright (C) 2006  Freddy Vulto
-# Version: 1.0.9
+# Copyright (C) 2007  Freddy Vulto
+# Version: 1.0.10
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
