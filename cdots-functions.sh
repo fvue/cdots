@@ -3,7 +3,7 @@
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # For TAB-completion see: dots-completion.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.0.10
+# Version: 1.1.0
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
 #
 # Arguments: [dir]   Directory to go forth - down the directory tree

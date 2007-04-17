@@ -2,7 +2,7 @@
 # --- cdots-completion.sh --------------------------------------------
 # TAB completion for the .. ... .... etc commands: cdots-functions.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.0.10
+# Version: 1.1.0
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
@@ -38,7 +38,12 @@ _cdots() {
         #      +-----------2---------+ : Remove trailing /*s from PWD
         #      |     +-------1------+| : Replace every . with /*
     local dir="${PWD%${dots//\./\/\*}}/"
-    for i in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
+        # If first `compgen' returns no matches, try second `compgen'
+        # which allows for globbing characters
+    for i in $(
+        compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}" ||
+        compgen -d -X '!'"$dir${COMP_WORDS[COMP_CWORD]}*" -- $dir
+    ); do
             #  If i not dir in current dir, append extra slash '/'
             #  NOTE: With bash > v2, if i is also dir in current dir, 
             #+       'complete -o filenames' automatically appends 
