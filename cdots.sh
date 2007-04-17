@@ -37,17 +37,17 @@ CDOTS_DEPTH=7
 # @see cdots()
 function _cdots() {
         # ':1' = Ignore dot at pos 0, $'\012' = newline (\n)
-    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\012' i j k=0
+    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\012' i j=0
         #      +-----------2---------+ : Remove trailing /*s from PWD
         #      |     +-------1------+| : Replace every . with /*
     local dir="${PWD%${dots//\./\/\*}}/"
-    for j in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
-            #  If j not dir in current dir, append extra slash '/'
-            #  NOTE: With bash > v2, if j is also dir in current dir, 
+    for i in $(compgen -d -- "$dir${COMP_WORDS[COMP_CWORD]}"); do
+            #  If i not dir in current dir, append extra slash '/'
+            #  NOTE: With bash > v2, if i is also dir in current dir, 
             #+       'complete -o filenames' automatically appends 
             #+       slash '/'
-        (( $BASH_VERSINFO == 2 )) || [ ! -d ${j#$dir} ] && j="$j/"
-        COMPREPLY[k++]="${j#$dir}"
+        (( $BASH_VERSINFO == 2 )) || [ ! -d ${i#$dir} ] && i="$i/"
+        COMPREPLY[j++]="${i#$dir}"
     done
 } # _cdots()
 
