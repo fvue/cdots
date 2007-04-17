@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pversion=cdots-$(cat VERSION)
+pversion=$(cat VERSION)
 ln -s . $pversion
 
 	# @NOTE: Do not exclude all .svn directories since the test suite
@@ -22,4 +22,4 @@ ln -s $pversion.tar.gz cdots-1.0.current.tar.gz
 
     # Copy files to live server
 scp $pversion.tar.gz fvulto@www.fvue.nl:~/www/www.fvue.nl/cdots/
-scp cdots.sh fvulto@www.fvue.nl:~/www/www.fvue.nl/cdots/cdots.txt
+scp cdots.sh fvulto@www.fvue.nl:~/www/www.fvue.nl/cdots/$pversion.txt
