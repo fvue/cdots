@@ -3,7 +3,7 @@ set scriptDir [file normalize [file dirname [info script]]]
 cd $scriptDir
 
 
-set timeout 3
+set timeout 2
 
 
 	# Test single file configuration
