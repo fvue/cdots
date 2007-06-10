@@ -1,10 +1,16 @@
 set DEPTH 8
 
 
+expect_after {
+    eof       { fail "`$test' at eof" }
+    timeout   { fail "`$test' at timeout, output: '$expect_out(buffer)'" }
+}
+
+
+
 set dirs ""
 set dots .
 for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with argument - non-existing-dir"
 	set dir "$i-1"
 	set dots $dots.
   		# Previous working directory
@@ -12,20 +18,19 @@ for {set i 1} {$i < $DEPTH} {incr i} {
  	if [llength $dirs] {
 		set pwd $pwd/
 	}; # if
+	set cmd "$dots non_existing_dir"
+	set test "Should stay in current dir with command: $cmd"
 	set dirs [concat $dirs $dir]
 	set cwd  [join $dirs "/"]
 	send "cd $scriptDir/fixture1/$cwd\r"
 	expect -re $prompt/fixture1/$cwd>
 		# Send command
-	set cmd "$dots non_existing_dir"
 	send "$cmd\r"
 		# Bash should've stayed in the same directory
 	set expected "^$cmd\r\nbash: cd: .*$prompt/fixture1/$cwd>$"
 	expect {
 		-re $expected { pass $test }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 }; # for
 
@@ -53,8 +58,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected { pass $test }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 }; # for
 
@@ -81,8 +84,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 
 
@@ -93,8 +94,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
 	}; # expect
 }; # for
 
@@ -122,8 +121,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 
 
@@ -134,8 +131,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout ($expect_out(buffer))" }
 	}; # expect
 }; # for
 
@@ -163,8 +158,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout ($expect_out(buffer))" }
 	}; # expect
 
 
@@ -176,8 +169,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
 	}; # expect
 }; # for
 
@@ -207,8 +198,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 
 
@@ -219,8 +208,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
 	}; # expect
 }; # for
 
@@ -257,8 +244,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 
 
@@ -271,8 +256,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout ($expect_out(buffer))" }
 	}; # expect
         # Restore permissions
     exec chmod ug+x $scriptDir/fixture1
@@ -302,8 +285,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "$test at eof" }
-		timeout   { fail "$test at timeout" }
 	}; # expect
 
 
@@ -314,8 +295,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout ($expect_out(buffer))" }
 	}; # expect
 
 	set dirs [concat $dirs $dir]
@@ -337,29 +316,23 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	set dirs [concat $dirs $dir]
 	set cwd  [join $dirs "/"]
 	send "cd '$scriptDir/fixture1/$cwd'\r"
-	expect -re $prompt/fixture1/$cwd>
+	expect -ex $prompt/fixture1/$cwd>
 		# Try completion
 	set cmd "$dots \*2"
-	set test "Should complete ${i}up with wildcard argument expanding to one possibility: $cmd"
+	set test "Should complete wildcard to one: $cmd"
 	send "$cmd\t"
-        # NOTE: "^$cmd\u0008\u00081-2/$" doesn't work, because the \* needs to be escaped again
-        #       -- FVu, Fri Jun  8 02:04:06 CEST 2007
-	set expected "^$dots \\\*2\b\b1-2/$"
+	set expected "$cmd\b\b1-2/"
 	expect {
-		-re $expected  { pass "`$test', output: '$expect_out(buffer)'" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "`$test' at eof (expected '$expected', output: '$expect_out(buffer)'" }
-		timeout   { fail "`$test' at timeout (expected '$expected', output: '$expect_out(buffer)'" }
+		-ex $expected  { pass "`$test', output: '$expect_out(buffer)'" }
+		-ex $prompt    { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
 	}; # expect
         # Try to really cd
-	set test "Should cd ${i}up with wildcard argument expanding to one possibility: $cmd"
+	set test "Should cd wildcard to one: $cmd"
 	send "\n"
 	set expected $prompt/fixture1/1-2>
 	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
+		-ex $expected    { pass "$test" }
+		-ex $prompt      { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
 	}; # expect
 }; # for
 
@@ -382,25 +355,96 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect -re $prompt/fixture4/$cwd>
 		# Try completion
 	set cmd "$dots \*2"
-	set test "Should complete ${i}up with wildcard argument expanding to many possibilities: $cmd"
+	set test "Should complete wildcard to many: $cmd"
 	send "$cmd\t"
-	set expected "^$dots \\\*2\r\n1-2/ +2-2/ +\r\n$prompt/fixture4/$cwd>$dots .*\\\\\*2$"
+	set expected "$cmd\r\n1-2/  2-2/  \r\n$prompt/fixture4/$cwd>"
 	expect {
-		-re $expected  { pass "`$test', output: '$expect_out(buffer)'" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof       { fail "`$test' at eof (expected '$expected', output: '$expect_out(buffer)'" }
-		timeout   { fail "`$test' at timeout (expected '$expected', output: '$expect_out(buffer)'" }
+		-ex $expected  { pass "`$test', output: '$expect_out(buffer)'" }
+		-ex $prompt { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
 	}; # expect
         # Try to really cd
-	set test "Should cd ${i}up with wildcard argument expanding to many possibilities: $cmd"
+	set test "Should cd wildcard to many: $cmd"
 	send "\n"
         # `cd' goes to first possibility
 	set expected $prompt/fixture4/1-2>
 	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
-		eof              { fail "$test at eof" }
-		timeout          { fail "$test at timeout" }
+		-ex $expected    { pass "$test" }
+		-ex $prompt      { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+	}; # expect
+}; # for
+
+
+
+
+set dirs ""
+set dots .
+for {set i 1} {$i < $DEPTH} {incr i} {
+	set dir  "{$i-1}"
+	set dots $dots.
+  		# Previous working directory
+	set pwd [join $dirs "/"];
+ 	if [llength $dirs] {
+		set pwd $pwd/
+	}; # if
+	set dirs [concat $dirs $dir]
+	set cwd  [join $dirs "/"]
+	send "cd '$scriptDir/fixture1/$cwd'\r"
+	expect -ex $prompt/fixture1/$cwd>
+		# Try completion
+	set cmd "$dots ?-2"
+	set test "Should complete question mark to one: $cmd"
+	send "$cmd\t"
+	set expected "$cmd\b\b\b1-2/"
+	expect {
+		-ex $expected  { pass "`$test', output: '$expect_out(buffer)'" }
+		-ex $prompt    { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+	}; # expect
+        # Try to really cd
+	set test "Should cd question mark to one: $cmd"
+	send "\n"
+	set expected $prompt/fixture1/1-2>
+	expect {
+		-ex $expected    { pass "$test" }
+		-ex $prompt      { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+	}; # expect
+}; # for
+
+
+
+
+set dirs ""
+set dots .
+for {set i 1} {$i < $DEPTH} {incr i} {
+	set dir  "{$i-1}"
+	set dots $dots.
+  		# Previous working directory
+	set pwd [join $dirs "/"];
+ 	if [llength $dirs] {
+		set pwd $pwd/
+	}; # if
+	set dirs [concat $dirs $dir]
+	set cwd  [join $dirs "/"]
+	send "cd '$scriptDir/fixture4/$cwd'\r"
+	expect -re $prompt/fixture4/$cwd>
+		# Try completion
+	set cmd "$dots ?-2"
+	set test "Should complete question mark to many: $cmd"
+	send "$cmd\t"
+	#set expected "^$dots \\\*2\r\n1-2/ +2-2/ +\r\n$prompt/fixture4/$cwd>$dots .*\\\\\*2$"
+	#set expected [subst -nobackslashes -nocommands {$dots \*2\r\n1-2/  2-2/  \r\n$prompt/fixture4/$cwd>$dots \*2}]
+	set expected "$cmd\r\n1-2/  2-2/  \r\n$prompt/fixture4/$cwd>"
+	expect {
+		-ex $expected  { pass "`$test', output: '$expect_out(buffer)'" }
+		-ex $prompt { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+	}; # expect
+        # Try to really cd
+	set test "Should cd question mark to many: $cmd"
+	send "\n"
+        # `cd' goes to first possibility
+	set expected $prompt/fixture4/1-2>
+	expect {
+		-ex $expected    { pass "$test" }
+		-ex $prompt      { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
 	}; # expect
 }; # for
 

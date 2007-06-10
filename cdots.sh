@@ -29,17 +29,14 @@
 # http://www.fvue.nl/cdots/
 
 
-CDOTS_DEPTH=7
-
-
 #--- _cdots() --------------------------------------------------------
 # TAB completion for the .. ... .... etc commands
 # @see cdots()
 function _cdots() {
-        # ':1' = Ignore dot at pos 0, $'\012' = newline (\n)
-    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\012' i j=0
-        #      +-----------2---------+ : Remove trailing /*s from PWD
-        #      |     +-------1------+| : Replace every . with /*
+        # ':1' = Ignore dot at pos 0
+    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\n' i j=0
+        #      +-----------2---------+ : Remove trailing `/*'s from PWD
+        #      |     +-------1------+| : Replace every `.' with `/*'
     local dir="${PWD%${dots//\./\/\*}}/"
         # If first `compgen' returns no matches, try second `compgen'
         # which allows for globbing characters
@@ -67,11 +64,11 @@ function cdots() {
 } # cdots()
 
 
-    # Define aliases .. ... .... etc
+    # Define aliases .. ... .... etc, up to depth seven
     # NOTE: Functions are not defined directly as .. ... .... etc, 
     #       because these are not valid identifiers under `POSIX'
-cdotsAlias=.; cdotsAliases=; cdotsDir=
-for ((i = 1; i <= $CDOTS_DEPTH; i++)); do
+cdotsAlias=.; cdotsAliases=; cdotsDepth=7; cdotsDir=
+while ((cdotsDepth--)); do
     cdotsAlias=$cdotsAlias.; cdotsDir=$cdotsDir../
     alias $cdotsAlias="cdots $cdotsDir"
     cdotsAliases="$cdotsAliases $cdotsAlias"
@@ -79,4 +76,4 @@ done
     # Set completion of aliases .. ... .... etc to _cdots()
     # -o filenames: Escapes whitespace
 complete -o filenames -o nospace -F _cdots $cdotsAliases
-unset -v CDOTS_DEPTH cdotsAlias cdotsAliases cdotsDir i
+unset -v cdotsDepth cdotsAlias cdotsAliases cdotsDir

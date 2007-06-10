@@ -26,15 +26,12 @@
 # http://www.fvue.nl/cdots/
 
 
-CDOTS_DEPTH=7
-
-
 #--- _cdots() --------------------------------------------------------
 # TAB completion for the .. ... .... etc commands
 # @see cdots()
 _cdots() {
-        # ':1' = Ignore dot at pos 0, $'\012' = newline (\n)
-    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\012' i j=0
+        # ':1' = Ignore dot at pos 0
+    local dots=${COMP_WORDS[COMP_CWORD-1]:1} IFS=$'\n' i j=0
         #      +-----------2---------+ : Remove trailing /*s from PWD
         #      |     +-------1------+| : Replace every . with /*
     local dir="${PWD%${dots//\./\/\*}}/"
@@ -57,9 +54,9 @@ _cdots() {
     # Set completion of aliases .. ... .... etc to _cdots()
     # -o filenames: Escapes whitespace
 complete -o filenames -o nospace -F _cdots $(
-    for ((i = 1; i <= CDOTS_DEPTH; i++)); do
+    cdotsAlias=.; cdotsDepth=7
+    while ((cdotsDepth--)); do
         cdotsAlias=$cdotsAlias.
-        echo $cdotsAlias.
+        echo $cdotsAlias
     done
 )
-unset -v CDOTS_DEPTH cdotsAlias i

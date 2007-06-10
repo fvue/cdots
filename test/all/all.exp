@@ -11,22 +11,24 @@ set timeout 2
 	# Start bash
 exp_spawn bash --rcfile bashrc
 set prompt "bashdots@/"
-expect -re $prompt> 
+expect -ex $prompt
 	# Load scripts
 send "source ../../cdots.sh\n"
 	# Execute tests
 source lib/tests.exp
-send "\nexit\n"
+send "\rexit\r"
 
 	# Test split file configuration
 
+    # Make sure previous test is closed
+exp_close; exp_wait
 	# Start bash
 exp_spawn bash --rcfile bashrc
 set prompt "bashdots@/"
-expect -re $prompt> 
+expect -ex $prompt> 
 	# Load scripts
 send "source ../../cdots-functions.sh\n"
 send "source ../../cdots-completion.sh\n"
 	# Execute tests
 source lib/tests.exp
-send "\nexit\n"
+send "\rexit\r"

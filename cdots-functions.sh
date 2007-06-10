@@ -1,7 +1,7 @@
 #!/bin/bash
 # --- cdots.sh -------------------------------------------------------
 # Change directory back - 1-7 times - and forth with TAB-completion.
-# For TAB-completion see: dots-completion.sh
+# For TAB-completion see: cdots-completion.sh
 # Copyright (C) 2007  Freddy Vulto
 # Version: 1.1.0
 # Usage: ..[.[.[.[.[.[.]]]]]] [dir]
@@ -30,9 +30,6 @@
 # http://www.fvue.nl/cdots/
 
 
-CDOTS_DEPTH=7
-
-
 #--- cdots() ---------------------------------------------------------
 # Change directory to specified directories back, and forth
 # @param $1 string   Directory back
@@ -46,10 +43,9 @@ function cdots() {
     # Define aliases .. ... .... etc
     # NOTE: Functions are not defined directly as .. ... .... etc, 
     #       because these are not valid identifiers under `POSIX'
-cdotsAlias=.; cdotsAliases=; cdotsDir=
-for ((i = 1; i <= $CDOTS_DEPTH; i++)); do
+cdotsAlias=.; cdotsDepth=7; cdotsDir=
+while ((cdotsDepth--)); do
     cdotsAlias=$cdotsAlias.; cdotsDir=$cdotsDir../
     alias $cdotsAlias="cdots $cdotsDir"
-    cdotsAliases="$cdotsAliases $cdotsAlias"
 done
-unset -v CDOTS_DEPTH cdotsAlias cdotsAliases cdotsDir i
+unset -v cdotsDepth cdotsAlias cdotsDir
