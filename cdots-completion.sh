@@ -2,7 +2,7 @@
 # --- cdots-completion.sh --------------------------------------------
 # TAB completion for the .. ... .... etc commands: cdots-functions.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.1.0
+# Version: 1.1.1
 #
 # Example:   $/usr/share> .. lo[TAB]/sh[TAB])
 #            $/usr/local/share>  
