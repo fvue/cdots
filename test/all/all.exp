@@ -1,5 +1,9 @@
 	# cd to script dir
-set scriptDir [file normalize [file dirname [info script]]]
+if {[info tclversion] >= 8.4} {
+    set scriptDir [file normalize [file dirname [info script]]]
+} else {
+    append scriptDir [pwd] / [file dirname [info script]]
+}; # if
 cd $scriptDir
 
 
@@ -10,7 +14,7 @@ set timeout 2
 
 	# Start bash
 exp_spawn bash --rcfile bashrc
-set prompt "bashdots@/"
+set prompt "cdots@/"
 expect -ex $prompt
 	# Load scripts
 send "source ../../cdots.sh\n"
@@ -24,7 +28,7 @@ send "\rexit\r"
 exp_close; exp_wait
 	# Start bash
 exp_spawn bash --rcfile bashrc
-set prompt "bashdots@/"
+set prompt "cdots@/"
 expect -ex $prompt> 
 	# Load scripts
 send "source ../../cdots-functions.sh\n"

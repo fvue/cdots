@@ -2,13 +2,19 @@
 # --- cdots.sh -------------------------------------------------------
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.1.1
-# Usage: ..[.[.[.[.[.[.]]]]]] [dir]
-#
+# Version: 1.1.2
+# Usage: .. [dir] = cd ../[dir]
+#        ... [dir] = cd ../../[dir]
+#        .... [dir] = cd ../../../[dir]
+#        ..... [dir] = cd ../../../../[dir]
+#        ...... [dir] = cd ../../../../../[dir]
+#        ....... [dir] = cd ../../../../../../[dir]
+#        ........ [dir] = cd ../../../../../../../[dir]
+##
 # Arguments: [dir]   Directory to go forth - down the directory tree
 #
-# Example:   $/usr/share> .. local/share/   # .. lo[TAB]/sh[TAB])
-#            $/usr/local/share>  
+# Example:   $/usr/local/share> ... sh[TAB]
+#            $/usr/share>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

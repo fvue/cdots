@@ -1,3 +1,9 @@
+cdots-1.1.2, Jun 14, 2007
+
+- Fixed test suite to run under tcl-8.3
+- Cosmetic changes of test suite
+- Improved documentation at script intro
+
 cdots-1.1.1, Jun 11, 2007
 
 - Added automated tests for wildcards * and ?
@@ -12,7 +18,7 @@ cdots-1.1.0, Apr 17, 2007
 
 cdots-1.0.10, Apr 11, 2007
 
-- Fixed handling of globbing character(s) in argument.
+- Fixed cd with globbing character(s) in argument
 
 
 cdots-1.0.9, Apr 1, 2007

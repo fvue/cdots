@@ -2,10 +2,10 @@
 # --- cdots-completion.sh --------------------------------------------
 # TAB completion for the .. ... .... etc commands: cdots-functions.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.1.1
+# Version: 1.1.2
 #
-# Example:   $/usr/share> .. lo[TAB]/sh[TAB])
-#            $/usr/local/share>  
+# Example:   $/usr/local/share> ... sh[TAB]
+#            $/usr/share>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
