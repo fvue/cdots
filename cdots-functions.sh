@@ -3,7 +3,7 @@
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # For TAB-completion see: cdots-completion.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.1.2
+# Version: 1.1.3
 # Usage: .. [dir] = cd ../[dir]
 #        ... [dir] = cd ../../[dir]
 #        .... [dir] = cd ../../../[dir]
@@ -42,7 +42,8 @@
 # @param $2 string   Directory forth
 # @see _cdots() for TAB-completion
 function cdots() {
-    eval cd "$1$2"
+    # If dir can't be found, try globbing with `eval'
+    [ -d "$1$2" ] && cd "$1$2" || eval cd "$1$2"
 } # cdots()
 
 

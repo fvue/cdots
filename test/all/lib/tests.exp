@@ -177,7 +177,6 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 set dirs ""
 set dots .
 for {set i 1} {$i < $DEPTH} {incr i} {
-	set test "${i}up with completion of filled argument containing space"
 	set dir  "{$i 1}"
 	set dots $dots.
   		# Previous working directory
@@ -190,21 +189,22 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	send "cd '$scriptDir/fixture3/$cwd'\r"
 	expect -re $prompt/fixture3/$cwd>
 		# Try completion
-	set cmd "$dots '${pwd}'$i"
+	set cmd "$dots 1"
+	set test "Should complete argument containing space: $cmd"
 	send "$cmd\t"
         # Escape backslashes for regexp (\ -> \B)
     #set cmd [string replace $cmd [string first "\\" $cmd] [string last "\\" $cmd] "\\B"]
-	set expected "$cmd\r\n$i 1/  $i 2/  \r\n$prompt/fixture3/$cwd>"
+	set expected "$cmd\r\n1 1/  1 2/  \r\n$prompt/fixture3/$cwd>"
 	expect {
 		-re $expected  { pass "$test" }
 		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
 	}; # expect
 
 
-	set test "${i}upped with argument-completion"
+	set test "Should cd with argument containing space: $cmd"
 		# Try to really cd
 	send "1\n"
-	set expected $prompt/fixture3/$cwd>
+	set expected "$prompt/fixture3/1 1>"
 	expect {
 		-re $expected    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
