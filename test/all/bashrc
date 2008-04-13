@@ -1,5 +1,6 @@
     # Use bash strict mode
 set -o posix
+shopt -u dotglob
 	# Set prompt to ignore current working directory; display path starting from here
 	# E.g. prompt: cdots//fixture1/1-1>
 mwd=$(pwd)

@@ -87,7 +87,7 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	}; # expect
 
 
-	set test "${i}upped with argument-completion"
+	set test "${i}upped with completion of filled argument"
 		# Try to really cd
 	send "1\n"
 	set expected $prompt/fixture1/$cwd>
@@ -116,21 +116,23 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect -re $prompt/fixture1/$cwd>
 		# Try completion
 	set cmd "$dots "
+    set svn false
 	send "$cmd\t"
-	set expected "^$cmd\r\n1-1/ +1-2/ +.svn/ *\r\n$prompt/fixture1/$cwd>$cmd$"
 	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+            # Case .svn is present
+		-re "^$cmd\r\n1-1/ +1-2/ +\.svn/ +\r\n$prompt/fixture1/$cwd>$cmd$"  { pass "$test"; set svn true }
+            # Case .svn isn't present
+		-re "^$cmd\r\n1-1/ +1-2/ +\r\n$prompt/fixture1/$cwd>${cmd}1-$"  { pass "$test"}
+		-re $prompt.*> { fail "$test" }
 	}; # expect
 
 
-	set test "${i}upped with argument-completion"
+	set test "${i}upped with completion of empty argument"
 		# Try to really cd
-	send "1\n"
-	set expected $prompt/fixture1/$cwd>
+    if {$svn} {send "1-1\n"} {send "1\n"}
 	expect {
-		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+		-re $prompt/fixture1/1-1>    { pass "$test" }
+		-re $prompt.*>   { fail "$test" }
 	}; # expect
 }; # for
 
@@ -153,22 +155,26 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect -re $prompt/fixture1/$cwd>
 		# Try completion
 	set cmd "$dots $pwd"
+    set svn false
 	send "$cmd\t"
-	set expected "^$cmd\r\n$i-1/ +$i-2/ +\.svn/ *\r\n$prompt/fixture1/$cwd>$cmd$"
+	set expected "^$cmd\r\n$i-1/ +$i-2/ +(\.svn/ +|)\r\n$prompt/fixture1/$cwd>$cmd$"
 	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+            # Case .svn is present (during development)
+		-re "^$cmd\r\n$i-1/ +$i-2/ +\.svn/ +\r\n$prompt/fixture1/$cwd>$cmd$"  { pass "$test"; set svn true }
+            # Case .svn isn't present
+		-re "^$cmd\r\n$i-1/ +$i-2/ +\r\n$prompt/fixture1/$cwd>${cmd}$i-$"  { pass "$test" }
+		-re $prompt.*> { fail "$test" }
 	}; # expect
 
 
-	set test "${i}upped with argument-completion"
+	set test "${i}upped with completion of path argument"
 		# Try to really cd
-	send "$i-1\n"
-	#set expected $prompt/fixture1/$cwd/$i-1>
-	set expected .*>
+	if {$svn} {send "$i-1\n"} {send "1\n"}
+	set expected $prompt/fixture1/$cwd>
+	#set expected .*>
 	expect {
 		-re $expected    { pass "$test" }
-		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+		-re $prompt.*>   { fail "$test" }
 	}; # expect
 }; # for
 
@@ -280,20 +286,22 @@ for {set i 1} {$i < $DEPTH} {incr i} {
 	expect -re $prompt/fixture1/$cwd>
 		# Try completion
 	set cmd "$dots "
+    set svn false
 	send "$cmd\t"
-	set expected "^$cmd\r\n1-1/ +1-2/ +.svn/ *\r\n$prompt/fixture1/$cwd>$cmd$"
 	expect {
-		-re $expected  { pass "$test" }
-		-re $prompt.*> { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
+            # Case .svn is present (during development)
+		-re "^$cmd\r\n1-1/ +1-2/ +\.svn/ +\r\n$prompt/fixture1/$cwd>$cmd$" { pass "$test"; set svn true }
+            # Case .svn isn't present
+		-re "^$cmd\r\n1-1/ +1-2/ +\r\n$prompt/fixture1/$cwd>${cmd}1-$" { pass "$test" }
+		-re $prompt.*> { fail "$test" }
 	}; # expect
 
 
-	set test "${i}upped within symlink with argument-completion"
+	set test "${i}upped within symlink with completion of empty argument"
 		# Try to really cd
-	send "1\n"
-	set expected $prompt/fixture1/$cwd>
+	if {$svn} {send "1-1\n"} {send "1\n"}
 	expect {
-		-re $expected    { pass "$test" }
+		-re $prompt/fixture1/1-1>    { pass "$test" }
 		-re $prompt.*>   { fail "$test at prompt (expected '$expected', output: '$expect_out(buffer)'" }
 	}; # expect
 

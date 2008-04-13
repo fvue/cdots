@@ -3,13 +3,13 @@
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # Copyright (C) 2007  Freddy Vulto
 # Version: 1.2.0
-# Usage: .. [dir] = cd ../[dir]
-#        ... [dir] = cd ../../[dir]
-#        .... [dir] = cd ../../../[dir]
-#        ..... [dir] = cd ../../../../[dir]
-#        ...... [dir] = cd ../../../../../[dir]
-#        ....... [dir] = cd ../../../../../../[dir]
-#        ........ [dir] = cd ../../../../../../../[dir]
+# Usage: .. [dir]
+#        ... [dir]
+#        .... [dir]
+#        ..... [dir]
+#        ...... [dir]
+#        ....... [dir]
+#        ........ [dir]
 ##
 # Arguments: [dir]   Directory to go forth - down the directory tree
 #
