@@ -3,7 +3,7 @@
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # For TAB-completion see: cdots-completion.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: 1.2.0
+# Version: cdots-1.2.dev.71:72M
 # Usage: .. [dir]
 #        ... [dir]
 #        .... [dir]
@@ -16,6 +16,22 @@
 #
 # Example:   $/usr/local/share> ... sh[TAB]
 #            $/usr/share>
+#
+# INSTALLATION
+#
+# Installing this file is only necessary when you want to install cdots and 
+# bash completion separate; install cdots-completion.sh as well.
+#
+# See also INSTALL file.
+# 
+# Copy cdots-functions.sh to your home directory:
+# 
+#     cp cdots-functions.sh ~/
+# 
+# Add this line to your ~/.bashrc file:
+#    
+#     . ~/cdots-functions.sh
+#
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
