@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE project [
-	<!ENTITY proj "proj">
-	<!ENTITY version "current">
-]>
-<!-- @NOTE: This configuration file extends 'conf.out.xml' -->
+
 <project>
-	<namespace>http://www.fvue.nl/&proj;/&version;</namespace>
+  <cloneOrigin>proj</cloneOrigin>
+  <name>cdots</name>
+  <prefix>cdots</prefix>
+  <version>1.2.1</version>
 </project>

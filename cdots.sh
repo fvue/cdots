@@ -2,7 +2,7 @@
 # --- cdots.sh -------------------------------------------------------
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # Copyright (C) 2007  Freddy Vulto
-# Version: cdots-1.2.dev.71:73M
+# Version: cdots-1.2.dev.71:74M
 # Usage: .. [dir]
 #        ... [dir]
 #        .... [dir]
