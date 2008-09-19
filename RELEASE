@@ -1,5 +1,10 @@
 $VERSION
 
+- Removed automatic installation from `cdots-completion.sh', allowing
+  easy installation with bash-completion-lib.  See also 
+  http://fvue.nl/wiki/bash_completion_lib
+- Improved INSTALL documentation
+- Renamed cdots-functions.sh (plural) to cdots-function.sh (singular)
 - Made existence of .svn directory in test fixture optional
 
 

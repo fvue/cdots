@@ -1,11 +1,29 @@
 #!/bin/bash
 # --- cdots-completion.sh --------------------------------------------
-# TAB completion for the .. ... .... etc commands: cdots-functions.sh
-# Copyright (C) 2007  Freddy Vulto
-# Version: 1.2.0
+# TAB completion for the .. ... .... etc commands: cdots-function.sh
+# Copyright (C) 2008  Freddy Vulto
+# Version: cdots-1.2.dev.71:73M
 #
 # Example:   $/usr/local/share> ... sh[TAB]
 #            $/usr/share>
+#
+# INSTALLATION
+#
+# Installing this file is only necessary when you want to install cdots and 
+# bash completion separate; install cdots-function.sh as well.
+#
+# See also INSTALL file.
+# 
+# Copy cdots-completion.sh to your home directory:
+# 
+#     cp cdots-completion.sh ~/
+# 
+# Put the lines underneath in your ~/.bashrc file:
+#    
+#     . ~/cdots-completion.sh
+#     complete -o filenames -o nospace -F \
+# 	_cdots .. ... .... ..... ...... ....... ........
+#
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -49,14 +67,3 @@ _cdots() {
         COMPREPLY[j++]="${i#$dir}"
     done
 } # _cdots()
-
-
-    # Set completion of aliases .. ... .... etc to _cdots()
-    # -o filenames: Escapes whitespace
-complete -o filenames -o nospace -F _cdots $(
-    cdotsAlias=.; cdotsDepth=7
-    while ((cdotsDepth--)); do
-        cdotsAlias=$cdotsAlias.
-        echo $cdotsAlias
-    done
-)

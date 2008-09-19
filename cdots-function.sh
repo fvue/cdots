@@ -3,7 +3,7 @@
 # Change directory back - 1-7 times - and forth with TAB-completion.
 # For TAB-completion see: cdots-completion.sh
 # Copyright (C) 2007  Freddy Vulto
-# Version: cdots-1.2.dev.71:72M
+# Version: cdots-1.2.dev.71:73M
 # Usage: .. [dir]
 #        ... [dir]
 #        .... [dir]
@@ -24,13 +24,13 @@
 #
 # See also INSTALL file.
 # 
-# Copy cdots-functions.sh to your home directory:
+# Copy cdots-function.sh to your home directory:
 # 
-#     cp cdots-functions.sh ~/
+#     cp cdots-function.sh ~/
 # 
 # Add this line to your ~/.bashrc file:
 #    
-#     . ~/cdots-functions.sh
+#     . ~/cdots-function.sh
 #
 #
 # This program is free software; you can redistribute it and/or modify

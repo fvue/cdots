@@ -1,18 +1,80 @@
-You can install either a single file cdots.sh (1) or two separate files
-cdots-functions.sh and cdots-completion.sh (2).
+Installing cdots means installing two things:
+1.  cdots:
+    The function `cdots' with aliases .. ...
+2.  bash completion:
+    Bash completion for the aliases .. ...
 
-There are many places to put them. These are a few:
+To install, you can choose between many options:
 
-1. As a single file for a single user
+1.  Install cdots and bash completion combined
+    1.1.  Single user
+    1.2.  Multi-user
+2.  Install cdots and bash completion separate
+    2.1.  Cdots
+          2.1.1.  Single user
+	  2.1.2.  Multi-user
+    2.2.  Bash completion
+          2.2.1.  Standalone
+	  2.2.2.  Bash-completion-library
+	          2.2.2.1.  Single user
+		  2.2.2.2.  Multi-user
+	  2.2.3.  Bash-completion (Ian Macdonald)
+		  2.2.3.1.  Single user
+		  2.2.3.2.  Single user (alternative)
+		  2.2.3.3.  Multi-user
 
-   Include cdots.sh from within ~/.bashrc:
 
-       source cdots.sh
+1.  Install cdots and bash completion combined
 
-2. As separate files for all users
+1.1.  Single user
 
-   Copy cdots-functions.sh to /etc/profile.d. Make sure /etc/profile contains
-   something like this: 
+    Copy cdots.sh to your home directory:
+
+	cp cdots.sh ~/
+
+    Include cdots.sh from within ~/.bashrc:
+
+	source cdots.sh
+
+
+1.2.  Multi-user
+
+    Copy cdots.sh to /etc/profile.d:
+   
+	cp cdots.sh /etc/profile.d/
+
+    Make sure /etc/profile contains something like this: 
+   
+       if test -d /etc/profile.d; then
+          for s in /etc/profile.d/*.sh ; do
+             test -r $s && . $s
+          done
+          unset s
+       fi
+
+
+2.  Install cdots and bash completion separate
+
+2.1.  Cdots
+
+2.1.1.  Single user
+
+    Copy cdots-function.sh to your home directory:
+
+	cp cdots-function.sh ~/
+
+    Add this line to your ~/.bashrc file:
+
+	. ~/cdots-function.sh
+
+
+2.1.2.  Multi-user
+
+    Copy cdots-function.sh to /etc/profile.d:
+   
+	cp cdots-function.sh /etc/profile.d/
+
+    Make sure /etc/profile contains something like this: 
    
       if test -d /etc/profile.d; then
          for s in /etc/profile.d/*.sh ; do
@@ -20,13 +82,96 @@ There are many places to put them. These are a few:
          done
          unset s
       fi
-   
-   Copy cdots-completion.sh to /etc/bash_completion.d. Make sure /etc/profile
-   contains something like this: 
-   
-      if test -d /etc/bash_completion.d; then
-         for s in /etc/bash_completion.d/*.sh ; do
-            test -r $s && . $s
-         done
-         unset s
-      fi
+
+
+2.2.  Bash completion
+
+2.2.1.  Standalone
+
+    Copy cdots-completion.sh to your home directory:
+
+	cp cdots-completion.sh ~/
+
+    Put the lines underneath in your ~/.bashrc file:
+    
+	. ~/cdots-completion.sh
+	complete -o filenames -o nospace -F \
+	    _cdots .. ... .... ..... ...... ....... ........
+
+
+2.2.2.  Bash-completion-library
+
+    For more information, see: http://fvue.nl/wiki/Bash_completion_lib
+
+
+2.2.2.1.  Single user
+
+    Execute the lines below to install cdots bash completion locally for the
+    current user:
+
+	bcl add cdots-completion.sh cdots -o 'filenames nospace' \
+	--alias '.. ... .... ..... ...... ....... ........'
+
+
+2.2.2.2.  Multi-user
+
+    Set the COMP_PATH variable to contain the directories:
+    - $HOME/.bash_completion_lib.d/completions
+    - /usr/local/etc/bash_completion_lib/completions
+    - /etc/bash_completion_lib/completions
+
+    To set COMP_PATH, put these lines in /etc/profile:
+
+	[ "$PS1" ] && export COMP_PATH="\
+	$HOME/.bash_completion_lib.d/completions:\
+	/usr/local/etc/bash_completion_lib/completions\
+	/etc/bash_completion_lib/completions"
+
+    Execute the lines below to install cdots bash completion for all users:
+
+	bcl add cdots-completion.sh cdots -o 'filenames nospace' \
+	--alias '.. ... .... ..... ...... ....... ........' \
+	--lib /usr/local/etc/bash_completion_lib/completions
+
+
+2.2.3.  Bash-completion (Ian Macdonald)
+
+2.2.3.1.  Single user
+
+    Add the contents of cdots-completion.sh, together with the `complete'
+    install command, to ~/.bash_completion:
+
+	cat << BASH cdots-completion.sh - >> ~/.bash_completion
+	complete -o filenames -o nospace -F \\
+	    _cdots .. ... .... ..... ...... ....... ........
+	BASH
+
+
+2.2.3.2.  Single user (alternative)
+
+    Modify ~/.bash_completion to contain these lines:
+
+	    # Source additional scripts
+	for s in ~/.bash_completion.d/*.sh ; do
+	    [ -r $s ] && . $s
+	done
+	unset s
+
+    Copy cdots-completion.sh, together with the `complete'
+    install command, to ~/.bash_completion.d:
+
+	cat << BASH cdots-completion.sh - >> ~/.bash_completion.d/cdots-completion.sh
+	complete -o filenames -o nospace -F \\
+	    _cdots .. ... .... ..... ...... ....... ........
+	BASH
+	
+
+2.2.3.3.  Multi-user
+
+    Copy cdots-completion.sh, together with the `complete'
+    install command, to /etc/bash_completion.d:
+
+	cat << BASH cdots-completion.sh - >> /etc/bash_completion.d/cdots-completion.sh
+	complete -o filenames -o nospace -F \\
+	    _cdots .. ... .... ..... ...... ....... ........
+	BASH

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+    # cd to script dir
+cd "$(dirname "$(which "$0")")"
+
+version=$(cat VERSION)
+
+    # Replace `# Version: ' with actual version
+    # If VERSION ends with 'dev', subversion release is appended as well
+sed -e "s/^# Version: .*/# Version: ${version/%dev/dev.$(svnversion)}/" -i cdots.sh cdots-completion.sh cdots-function.sh

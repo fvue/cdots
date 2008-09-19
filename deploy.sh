@@ -12,9 +12,10 @@ ln -s . $v
     #        expects some .svn directories in the fixture directories
 tar -cvzf $v.tar.gz \
 	--exclude=.svn \
-	--exclude='log/*' \
-	--exclude='*.swp' \
-	${v}/cdots.sh ${v}/cdots-completion.sh ${v}/cdots-functions.sh ${v}/AUTHORS ${v}/COPYING ${v}/INSTALL ${v}/VERSION ${v}/RELEASE ${v}/test
+	--exclude=*.log \
+	--exclude=*.sum \
+	--exclude=*.swp \
+	${v}/cdots.sh ${v}/cdots-completion.sh ${v}/cdots-function.sh ${v}/AUTHORS ${v}/COPYING ${v}/INSTALL ${v}/VERSION ${v}/RELEASE ${v}/test
 
     # Remove temporary directory
 [ -h $v ] && rm $v
