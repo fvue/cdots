@@ -1,4 +1,4 @@
-$VERSION
+cdots-1.2.1, 21-Sep-2008
 
 - Removed automatic installation from `cdots-completion.sh', allowing
   easy installation with bash-completion-lib.  See also 

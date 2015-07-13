@@ -21,9 +21,9 @@ tar -cvzf $v.tar.gz \
 [ -h $v ] && rm $v
 
     # Link bashdots-1.0.current.tar.gz
-#[ -f cdots-1.0.current.tar.gz ] && rm cdots-1.0.current.tar.gz
-#ln -s $v.tar.gz cdots-1.0.current.tar.gz
+[ -f cdots-1.0.current.tar.gz ] && rm cdots-1.0.current.tar.gz
+ln -s $v.tar.gz cdots-1.0.current.tar.gz
 
     # Copy files to live server
-#scp $v.tar.gz RELEASE fvue:fvue/cdots/
-#scp cdots.sh fvue:fvue/cdots/$v.txt
+scp $v.tar.gz RELEASE fvue:fvue/cdots/
+scp cdots.sh fvue:fvue/cdots/$v.txt

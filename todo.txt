@@ -1,3 +1,7 @@
+Bugfix: VERSION is deployed as non-existing symlink to VERSION~
+
+Bugfix: Tests of deployed project fail (source cdots-functions.sh instead of cdots-function.sh)
+
 Bugfix: handle glob pattern, e.g. .. *.live.  Solution: function cdots { eval cd "$1$2" }
 
 install via rpm
